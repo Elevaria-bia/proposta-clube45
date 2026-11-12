@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Proposta da ELEVARIA para o Clube 45: a plataforma das embaixadoras.">
+<style>body{margin:0}img{max-width:100%}</style>
+<title>A Roda 45</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap">
+<style>
+/* Layout: página escura da ELEVARIA, uma coluna de leitura com o celular do app ao lado;
+   as telas do app usam a paleta do Clube 45 dentro da moldura do celular. */
+:root{
+  color-scheme:dark;
+  --bg:#0A0A0A; --surface:#131311; --surface-2:#1B1B18; --line:#2B2A25;
+  --fg:#F2EEE6; --muted:#A9A396; --green:#3D5A3A; --green-fg:#9DBB97;
+  --accent:#E87B6A; --gold:#C4A87A;
+  --c45-bg:#FDECD7; --c45-wine:#800020; --c45-ink:#1F1F1F; --c45-muted:#5C5D60;
+  --c45-card:#FFFFFF; --c45-ok:#097A47; --c45-line:#EBD3B6; --c45-black:#000000;
+  --font-display:"Playfair Display",Georgia,"Times New Roman",serif;
+  --font-body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-app:"Poppins","DM Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+section{padding-block:clamp(48px,8vw,92px);border-top:1px solid var(--line)}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;line-height:1.12;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.7rem,8vw,4.6rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.7rem,4vw,2.5rem);max-width:20ch}
+h3{font-size:1.2rem;font-family:var(--font-body);font-weight:600;line-height:1.3}
+p{margin:0;max-width:62ch}
+.eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.lead{font-size:clamp(1.1rem,2.2vw,1.3rem);color:var(--fg);max-width:46ch}
+.muted{color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:18px}
+.head{display:flex;flex-direction:column;gap:14px;margin-bottom:clamp(28px,5vw,44px)}
+
+/* Hero */
+.hero{border-top:0;padding-block:clamp(40px,7vw,80px) clamp(40px,6vw,64px)}
+.hero .stack{gap:22px}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.meta{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:.9rem;color:var(--muted)}
+.meta b{color:var(--fg);font-weight:600}
+
+/* Antes e depois */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,48px)}
+.vs>div{min-width:0}
+.vs ul{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column}
+.vs li{padding:12px 0;border-top:1px solid var(--line)}
+.vs .now li{color:var(--muted)}
+.vs .next h3{color:var(--green-fg)}
+.vs .now h3{color:var(--muted)}
+.note{margin-top:28px;padding:16px 18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;font-size:.96rem;max-width:none}
+.note b{color:var(--gold);font-weight:600}
+
+/* App: lista + celular */
+.app{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(24px,5vw,64px);align-items:start}
+.spaces{display:flex;flex-direction:column;gap:6px;min-width:0}
+.space{appearance:none;text-align:left;font:inherit;color:var(--fg);background:transparent;border:1px solid transparent;border-radius:12px;padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.space span{color:var(--muted);font-size:.95rem}
+.space b{font-weight:600;font-size:1.05rem}
+.space:hover{background:var(--surface)}
+.space[aria-selected="true"]{background:var(--surface-2);border-color:var(--line)}
+.space[aria-selected="true"] b{color:var(--accent)}
+.space:focus-visible,.tab:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.phone-col{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
+.phone{width:min(320px,100%);border:10px solid #23221E;border-radius:38px;background:var(--c45-bg);color:var(--c45-ink);font-family:var(--font-app);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.screen{height:520px;overflow:hidden;padding:18px 16px 12px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.4}
+.screen h4{font-family:var(--font-display);font-size:21px;font-weight:600;color:var(--c45-wine);margin:0 0 2px;line-height:1.15}
+.screen .sub{color:var(--c45-muted);font-size:12px}
+.card{background:var(--c45-card);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.card b{font-weight:600}
+.tag{display:inline-block;align-self:flex-start;font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:40px;background:var(--c45-wine);color:#fff}
+.tag.ok{background:#E3F3EA;color:var(--c45-ok)}
+.tag.wait{background:#FDE1BF;color:#2B2B2B}
+.btn{background:var(--c45-black);color:#fff;text-align:center;font-weight:500;padding:10px;font-size:13px}
+.btn.ghost{background:transparent;color:var(--c45-ink);border:1px solid var(--c45-ink)}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.big{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.steps4{display:flex;gap:4px}
+.steps4 i{flex:1;height:5px;border-radius:3px;background:var(--c45-line)}
+.steps4 i.on{background:var(--c45-wine)}
+.quote{border-left:3px solid var(--c45-wine);padding-left:9px;color:var(--c45-ink);font-size:12px}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);background:var(--c45-card);border-top:1px solid var(--c45-line)}
+.tab{appearance:none;border:0;background:transparent;font:inherit;font-size:10px;font-weight:500;color:var(--c45-muted);padding:10px 2px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px}
+.tab::before{content:"";width:18px;height:3px;border-radius:2px;background:transparent}
+.tab[aria-selected="true"]{color:var(--c45-wine);font-weight:600}
+.tab[aria-selected="true"]::before{background:var(--c45-wine)}
+.caption{font-size:.82rem;color:var(--muted);text-align:center}
+
+/* Painel da marca */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:clamp(16px,3vw,26px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,32px)}
+.panel>div{min-width:0;display:flex;flex-direction:column;gap:12px}
+.panel h3{font-size:1rem;color:var(--gold)}
+.queue{list-style:none;margin:0;padding:0}
+.queue li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.queue li:first-child{border-top:0;padding-top:0}
+.queue b{font-variant-numeric:tabular-nums;color:var(--accent)}
+.meter{height:10px;border-radius:6px;background:var(--surface-2);overflow:hidden}
+.meter i{display:block;height:100%;width:80%;background:var(--green-fg)}
+.bars{display:grid;grid-template-columns:auto 1fr auto;gap:8px 12px;align-items:center;font-size:.92rem}
+.bars i{display:block;height:10px;border-radius:5px;background:var(--gold)}
+.bars span:last-child{font-variant-numeric:tabular-nums;color:var(--muted)}
+.panel .wide{grid-column:1/-1}
+
+/* Jornada */
+.flow{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px 8px;counter-reset:f}
+.flow li{counter-increment:f;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 16px 8px 10px;font-size:.95rem}
+.flow li::before{content:counter(f);width:24px;height:24px;border-radius:50%;background:var(--surface-2);color:var(--gold);font-size:.78rem;font-weight:700;display:grid;place-items:center;flex:none}
+.flow li.end{border-color:var(--green-fg);color:var(--green-fg)}
+.flow li.end::before{background:var(--green);color:var(--fg)}
+
+/* Proteção */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(22px,4vw,44px) clamp(24px,5vw,64px)}
+.grid2>div{min-width:0;display:flex;flex-direction:column;gap:6px}
+.grid2 h3{color:var(--fg)}
+.grid2 p{color:var(--muted)}
+
+/* Fases */
+.phases{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.phases li{padding:0 18px 0 0;min-width:0;display:flex;flex-direction:column;gap:8px;border-top:2px solid var(--line);padding-top:16px}
+.phases li.live{border-top-color:var(--accent)}
+.phases .when{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.phases p{color:var(--muted);font-size:.95rem}
+
+/* Custos */
+.tablebox{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:460px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:14px 16px 14px 0;border-top:1px solid var(--line);vertical-align:baseline}
+th{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;border-top:0}
+td.num{font-family:var(--font-display);font-size:1.5rem;color:var(--fg);white-space:nowrap}
+td small{color:var(--muted);font-size:.86rem}
+
+/* Listas simples */
+.plain{list-style:none;margin:0;padding:0}
+.plain li{padding:11px 0;border-top:1px solid var(--line)}
+.plain li:first-child{border-top:0}
+.ask{counter-reset:a}
+.ask li{counter-increment:a;display:grid;grid-template-columns:28px 1fr;gap:10px}
+.ask li::before{content:counter(a);color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums}
+
+footer{border-top:1px solid var(--line);padding-block:32px 44px;color:var(--muted);font-size:.9rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 28px;justify-content:space-between}
+footer b{color:var(--fg);letter-spacing:.14em;font-weight:600}
+
+@media (max-width:820px){
+  .app{grid-template-columns:1fr}
+  .phone-col{order:-1}
+  .vs,.panel,.grid2{grid-template-columns:1fr}
+  .phases{grid-template-columns:1fr;gap:22px}
+  .space{padding:12px 14px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .space,.tab{transition:background-color .15s ease,color .15s ease}
+}
+</style>
+
+</head>
+<body>
+<header class="hero">
+  <div class="wrap stack">
+    <span class="eyebrow">Proposta da ELEVARIA para o Clube 45</span>
+    <h1>A Roda <em>45</em></h1>
+    <p class="lead">Um app onde cada embaixadora recebe tudo da marca, envia os vídeos, fala com a equipe e vê quanto ganhou. E um painel onde a equipe acompanha as 120 de uma tela só.</p>
+    <div class="meta">
+      <span><b>Para quem:</b> embaixadoras 40+ e a equipe do Clube 45</span>
+      <span><b>Onde roda:</b> no celular, sem loja de aplicativos</span>
+      <span><b>Data:</b> 12/11/2026</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">O problema</span>
+      <h2>Hoje a conversa com 120 embaixadoras acontece em três lugares</h2>
+    </div>
+    <div class="vs">
+      <div class="now">
+        <h3>Hoje</h3>
+        <ul>
+          <li>Planilha com os nomes e os cupons</li>
+          <li>Uma pasta no Drive para cada embaixadora</li>
+          <li>Avisos no grupo de WhatsApp, sem saber quem leu</li>
+          <li>Cada uma pergunta por mensagem quanto vendeu</li>
+          <li>Regras do que pode ser dito espalhadas em áudios e lives</li>
+        </ul>
+      </div>
+      <div class="next">
+        <h3>Com A Roda 45</h3>
+        <ul>
+          <li>Um cadastro só, com contrato aceito e cupom</li>
+          <li>Vídeo enviado pelo celular, com retorno da equipe no próprio vídeo</li>
+          <li>Aviso com botão "Li e entendi" e lista de quem falta</li>
+          <li>Vendas e comissão na tela dela, todo dia</li>
+          <li>Um módulo curto de regras antes de liberar o cupom</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note"><b>Um exemplo desta semana:</b> uma única mensagem no grupo trouxe um aviso, um pedido de conteúdo, um pedido de dados e a entrega do cupom. No app, cada um desses vira um item com prazo, resposta e registro.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">O app da embaixadora</span>
+      <h2>Cinco espaços, uma coisa por vez</h2>
+      <p class="muted">Toque em um espaço para ver a tela. Letra grande, botão grande e entrada sem senha, pensados para quem está começando.</p>
+    </div>
+    <div class="app">
+      <div class="spaces" role="tablist" aria-label="Espaços do app">
+        <button class="space" role="tab" id="s-inicio" data-go="inicio" aria-selected="true"><b>Início</b><span>O que a marca precisa dela hoje: avisos, briefing da semana e prazos.</span></button>
+        <button class="space" role="tab" id="s-estudio" data-go="estudio" aria-selected="false"><b>Estúdio</b><span>Roteiros, envio do vídeo e o retorno da equipe, até aprovar.</span></button>
+        <button class="space" role="tab" id="s-carteira" data-go="carteira" aria-selected="false"><b>Carteira</b><span>Cupom, vendas por dia, comissão, cachê e a data do Pix.</span></button>
+        <button class="space" role="tab" id="s-escola" data-go="escola" aria-selected="false"><b>Escola 45</b><span>O que pode e o que não pode ser dito, com a Dra. Christiane, e dicas de gravação.</span></button>
+        <button class="space" role="tab" id="s-roda" data-go="roda" aria-selected="false"><b>A Roda</b><span>Conversa direta com a equipe e a comunidade só das embaixadoras.</span></button>
+      </div>
+      <div class="phone-col">
+        <div class="phone" aria-live="polite">
+          <div class="screen" data-screen="inicio">
+            <div><h4>Bom dia, Bia</h4><div class="sub">Você tem 2 coisas para hoje</div></div>
+            <div class="card"><span class="tag">Aviso obrigatório</span><b>O que pode e o que não pode dizer sobre o produto</b><div class="btn">Li e entendi</div></div>
+            <div class="card"><span class="tag wait">Briefing da semana</span><b>Rotina da manhã com a bruma</b><div class="sub">Entregar até 20/11 · Reels ou TikTok</div><div class="btn ghost">Ver o briefing</div></div>
+            <div class="card"><div class="row"><span>Vendas com o seu cupom hoje</span><b>2</b></div></div>
+          </div>
+          <div class="screen" data-screen="estudio" hidden>
+            <div><h4>Estúdio</h4><div class="sub">Rotina da manhã com a bruma</div></div>
+            <div class="card"><b>Seu vídeo</b><div class="steps4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div><div class="row sub"><span>Recebido</span><span>Em análise</span><span>Ajustar</span><span>Aprovado</span></div></div>
+            <div class="card"><span class="tag wait">A equipe pediu um ajuste</span><div class="quote">Aos 0:14 — troque "trata" por "cuida".</div><div class="quote">Na legenda — faltou o #publi.</div><div class="btn">Enviar novo vídeo</div></div>
+            <div class="card"><b>Roteiros prontos</b><div class="sub">3 ganchos para esta pauta</div></div>
+          </div>
+          <div class="screen" data-screen="carteira" hidden>
+            <div><h4>Carteira</h4><div class="sub">Novembro</div></div>
+            <div class="card"><div class="sub">Seu cupom</div><div class="row"><span class="big">BIA10</span><span class="tag ok">Ativo</span></div><div class="btn ghost">Copiar o link</div></div>
+            <div class="card"><div class="row"><span>Vendas no mês</span><b>12</b></div><div class="row"><span>Comissão</span><b>R$ 226,32</b></div><div class="row"><span>Cachê de vídeo aprovado</span><b>1 vídeo</b></div></div>
+            <div class="card"><div class="row"><span>Próximo Pix</span><b>dia 15</b></div><div class="sub">Você recebe o comprovante aqui.</div></div>
+          </div>
+          <div class="screen" data-screen="escola" hidden>
+            <div><h4>Escola 45</h4><div class="sub">Aulas curtas, de 5 minutos</div></div>
+            <div class="card"><span class="tag ok">Concluído</span><b>O que pode e o que não pode ser dito</b><div class="sub">Obrigatório para liberar o cupom</div></div>
+            <div class="card"><b>Como gravar</b><div class="sub">Luz, enquadramento e capa</div><div class="btn ghost">Assistir</div></div>
+            <div class="card"><b>Perguntas sobre o produto</b><div class="sub">"Tenho 33 anos, posso usar?"</div></div>
+          </div>
+          <div class="screen" data-screen="roda" hidden>
+            <div><h4>A Roda</h4><div class="sub">Equipe e comunidade</div></div>
+            <div class="card"><div class="row"><b>Meu kit não chegou</b><span class="tag ok">Respondido</span></div><div class="sub">A equipe respondeu hoje, 10h12</div></div>
+            <div class="btn">Falar com a equipe</div>
+            <div class="card"><b>Comunidade</b><div class="quote">Que luz vocês usam para gravar de manhã?</div><div class="sub">7 respostas</div></div>
+            <div class="card"><b>Meta do grupo em novembro</b><div class="steps4"><i class="on"></i><i class="on"></i><i></i><i></i></div></div>
+          </div>
+          <div class="tabs" role="tablist" aria-label="Menu do app">
+            <button class="tab" role="tab" data-go="inicio" aria-selected="true">Início</button>
+            <button class="tab" role="tab" data-go="estudio" aria-selected="false">Estúdio</button>
+            <button class="tab" role="tab" data-go="carteira" aria-selected="false">Carteira</button>
+            <button class="tab" role="tab" data-go="escola" aria-selected="false">Escola</button>
+            <button class="tab" role="tab" data-go="roda" aria-selected="false">A Roda</button>
+          </div>
+        </div>
+        <span class="caption">Telas ilustrativas, com dados de exemplo.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">O painel da marca</span>
+      <h2>A equipe começa o dia numa fila só</h2>
+      <p class="muted">Sai a planilha. Entra uma tela com o que precisa de resposta, quem leu cada aviso e quanto cada embaixadora vendeu.</p>
+    </div>
+    <div class="panel">
+      <div>
+        <h3>Fila do dia</h3>
+        <ul class="queue">
+          <li><span>Vídeos para aprovar</span><b>7</b></li>
+          <li><span>Conversas esperando resposta</span><b>4</b></li>
+          <li><span>Cadastros para aprovar</span><b>2</b></li>
+          <li><span>Briefings que vencem amanhã</span><b>9</b></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Aviso obrigatório: o que não dizer sobre o produto</h3>
+        <div class="meter" role="img" aria-label="96 de 120 confirmaram a leitura"><i></i></div>
+        <p><b>96 de 120</b> confirmaram a leitura. <span class="muted">As 24 que faltam aparecem em lista, e o cupom delas pausa em 7 dias.</span></p>
+      </div>
+      <div class="wide">
+        <h3>Vendas da semana por embaixadora</h3>
+        <div class="bars">
+          <span>Bia</span><i style="width:100%"></i><span>14</span>
+          <span>Carla</span><i style="width:79%"></i><span>11</span>
+          <span>Dani</span><i style="width:64%"></i><span>9</span>
+          <span>Elis</span><i style="width:43%"></i><span>6</span>
+        </div>
+      </div>
+    </div>
+    <p class="caption" style="margin-top:12px;text-align:left">Painel ilustrativo, com dados de exemplo.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">A jornada</span>
+      <h2>Do cadastro ao Pix, tudo dentro do app</h2>
+    </div>
+    <ol class="flow">
+      <li>Cadastro</li>
+      <li>Equipe aprova</li>
+      <li>Contrato e módulo de regras</li>
+      <li>Cupom liberado</li>
+      <li>Aceita o briefing</li>
+      <li>Envia o vídeo</li>
+      <li>Equipe aprova ou pede ajuste</li>
+      <li>Publica com #publi</li>
+      <li>Vendas e cachê no extrato</li>
+      <li class="end">Pix na conta</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Proteção da marca</span>
+      <h2>As regras viram funções do app, não um PDF numa pasta</h2>
+    </div>
+    <div class="grid2">
+      <div><h3>A regra vem antes do cupom</h3><p>Ninguém divulga sem aceitar o contrato e concluir o módulo sobre o que pode ser dito. Cosmético não pode prometer tratamento, e quem responde pela fala é a marca.</p></div>
+      <div><h3>Publicidade identificada</h3><p>As legendas modelo já saem com #publi, e a equipe confere os posts registrados. Post com cupom é publicidade.</p></div>
+      <div><h3>Dados protegidos</h3><p>Cada embaixadora só vê o que é dela. CPF e Pix ficam cifrados, e nenhum dado de quem comprou é guardado.</p></div>
+      <div><h3>Dinheiro com registro</h3><p>Toda comissão, estorno e pagamento fica gravado e não pode ser apagado. Quem fecha o mês não é quem marca como pago.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">O caminho</span>
+      <h2>Primeiro 20 embaixadoras, depois as 120</h2>
+    </div>
+    <ol class="phases">
+      <li class="live"><span class="when">Agora, até 27/11</span><h3>Black Friday</h3><p>Cupons e links pela própria loja, como já está sendo feito. Nenhuma mudança antes da data.</p></li>
+      <li><span class="when">8 semanas</span><h3>Construção</h3><p>App e painel com o essencial: avisos, briefings, envio de vídeo, vendas e fechamento do mês.</p></li>
+      <li><span class="when">4 semanas</span><h3>Piloto</h3><p>20 embaixadoras, metade experientes e metade iniciantes. Só abre para todas se elas usarem de verdade.</p></li>
+      <li><span class="when">Depois</span><h3>As 120 e a fase 2</h3><p>Abertura para todas, e então níveis, madrinhas e cachê com licença de uso do vídeo.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Custo de operação</span>
+      <h2>Quanto custa manter no ar por mês</h2>
+      <p class="muted">Estimativa com preços consultados em 12/11/2026. Não inclui as mensagens de WhatsApp, cobradas por unidade, nem a construção.</p>
+    </div>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Cenário</th><th>Embaixadoras</th><th>Por mês</th></tr></thead>
+        <tbody>
+          <tr><td>Piloto</td><td>20</td><td class="num">R$ 330</td></tr>
+          <tr><td>Programa de hoje</td><td>120</td><td class="num">R$ 1.129</td></tr>
+          <tr><td>Programa ampliado</td><td>1.000</td><td class="num">R$ 2.922</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="margin-top:16px">A conta supõe 4 vídeos por embaixadora por mês, guardados por um ano. O maior custo é o armazenamento dos vídeos; guardar menos tempo reduz o valor.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Onde estamos</span>
+      <h2>O desenho está pronto. O app ainda não foi construído</h2>
+    </div>
+    <div class="vs">
+      <div class="next">
+        <h3>Pronto</h3>
+        <ul>
+          <li>Pesquisa das plataformas do mercado e das regras (CONAR, Anvisa, LGPD)</li>
+          <li>Documento do produto, com 43 funções descritas</li>
+          <li>Projeto técnico completo</li>
+          <li>Banco de dados desenhado e testado contra ataques em laboratório, com mais de 600 verificações</li>
+          <li>Plano de trabalho de 8 semanas</li>
+        </ul>
+      </div>
+      <div class="now">
+        <h3>Falta</h3>
+        <ul>
+          <li>Construir as telas do app e do painel</li>
+          <li>Ligar a loja e o WhatsApp</li>
+          <li>Testar tudo em ambiente real</li>
+          <li>Rodar o piloto com 20 embaixadoras</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Para começar</span>
+      <h2>O que precisamos do Clube 45</h2>
+    </div>
+    <ol class="plain ask">
+      <li>Quem administra a loja na Shopify, para criar o acesso que lê os pedidos e os cupons.</li>
+      <li>Se o pagamento do site passa pela Shopify ou pela Yampi.</li>
+      <li>Uma planilha com nome, e-mail, @ do Instagram, @ do TikTok, cupom e link de cada embaixadora.</li>
+      <li>A comissão em live e a tabela de cachê por vídeo.</li>
+      <li>As datas de fechamento e de pagamento do mês.</li>
+      <li>O número de WhatsApp da marca que vai enviar os avisos.</li>
+      <li>As 20 embaixadoras do piloto.</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span><b>ELEVARIA</b></span>
+    <span>Proposta de 12/11/2026. Telas ilustrativas e números de exemplo.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var controls = document.querySelectorAll('[data-go]');
+  var screens = document.querySelectorAll('[data-screen]');
+  function show(name){
+    screens.forEach(function(s){ s.hidden = s.getAttribute('data-screen') !== name; });
+    controls.forEach(function(c){ c.setAttribute('aria-selected', c.getAttribute('data-go') === name ? 'true' : 'false'); });
+  }
+  controls.forEach(function(c){ c.addEventListener('click', function(){ show(c.getAttribute('data-go')); }); });
+})();
+</script>
+</body>
+</html>
